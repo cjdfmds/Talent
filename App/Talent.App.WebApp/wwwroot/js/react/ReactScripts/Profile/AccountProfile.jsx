@@ -125,8 +125,11 @@ export default class AccountProfile extends React.Component {
             data: JSON.stringify(this.state.profileData),
             success: function (res) {
                 console.log(res)
+                // console.log(this.state.profileData)
+                //     console.log('hi')
                 if (res.success == true) {
                     TalentUtil.notification.show("Profile updated sucessfully", "success", null, null)
+                    
                 } else {
                     TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
                 }
@@ -136,6 +139,7 @@ export default class AccountProfile extends React.Component {
                 console.log(res)
                 console.log(a)
                 console.log(b)
+                TalentUtil.notification.show("Error while saving User details", "error", null, null);
             }
         })
     }
@@ -174,7 +178,7 @@ export default class AccountProfile extends React.Component {
                                             <IndividualDetailSection
                                                 controlFunc={this.updateForComponentId}
                                                 details={profile}
-                                                componentId='contactDetails'
+                                                componentId=''
                                             />
                                         </FormItemWrapper> 
                                         

@@ -15337,11 +15337,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent\\talent-competition\\Talent.Services.Profile\\Talent.Services.Profile.csproj",
+      "projectUniqueName": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent3\\Talent\\Talent.Services.Profile\\Talent.Services.Profile.csproj",
       "projectName": "Talent.Services.Profile",
-      "projectPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent\\talent-competition\\Talent.Services.Profile\\Talent.Services.Profile.csproj",
+      "projectPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent3\\Talent\\Talent.Services.Profile\\Talent.Services.Profile.csproj",
       "packagesPath": "C:\\Users\\mdscj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent\\talent-competition\\Talent.Services.Profile\\obj\\",
+      "outputPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent3\\Talent\\Talent.Services.Profile\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -15361,8 +15361,8 @@
         "netcoreapp2.0": {
           "targetAlias": "netcoreapp2.0",
           "projectReferences": {
-            "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent\\talent-competition\\Talent.Common\\Talent.Common.csproj": {
-              "projectPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent\\talent-competition\\Talent.Common\\Talent.Common.csproj"
+            "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent3\\Talent\\Talent.Common\\Talent.Common.csproj": {
+              "projectPath": "C:\\Users\\mdscj\\OneDrive\\Documents\\GitHub\\Talent3\\Talent\\Talent.Common\\Talent.Common.csproj"
             }
           }
         }

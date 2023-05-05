@@ -10,6 +10,7 @@ export class IndividualDetailSection extends Component {
             Object.assign({}, props.details)
             : {
                 firstName: "",
+                lastName:"",
                 email: "",
                 phone: ""
             }
@@ -78,6 +79,16 @@ export class IndividualDetailSection extends Component {
                 />
                 <ChildSingleInput
                     inputType="text"
+                    label="Last Name"
+                    name="lastName"
+                    value={this.state.newContact.lastName}
+                    controlFunc={this.handleChange}
+                    maxLength={80}
+                    placeholder="Enter your last name"
+                    errorMessage="Please enter a valid last name"
+                />
+                <ChildSingleInput
+                    inputType="text"
                     label="Email address"
                     name="email"
                     value={this.state.newContact.email}
@@ -106,7 +117,8 @@ export class IndividualDetailSection extends Component {
 
     renderDisplay() {
 
-        let firstName = this.props.details ? `${this.props.details.firstName}` : ""
+        let firstName = this.props.details ? this.props.details.firstName : ""
+        let lastName = this.props.details ? this.props.details.lastName : ""
         let email = this.props.details ? this.props.details.email : ""
         let phone = this.props.details ? this.props.details.phone : ""
 
@@ -115,6 +127,7 @@ export class IndividualDetailSection extends Component {
                 <div className="ui sixteen wide column">
                     <React.Fragment>
                         <p>Name: {firstName}</p>
+                        <p>Surname: {lastName}</p>
                         <p>Email: {email}</p>
                         <p>Phone: {phone}</p>
                     </React.Fragment>
