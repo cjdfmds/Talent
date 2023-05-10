@@ -64,7 +64,7 @@ export default class AccountProfile extends React.Component {
     }
 
     componentDidMount() {
-        console.log("hi");
+        console.log("hello123");
         this.loadData();
     }
 
@@ -182,13 +182,15 @@ export default class AccountProfile extends React.Component {
                                             />
                                         </FormItemWrapper> 
                                         
-                                        {/*<FormItemWrapper
+                                        <FormItemWrapper
                                             title='Address'
                                             tooltip='Enter your current address'>
                                             <Address
-                                                addressData={this.state.profileData.address}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
+                                                controlFunc={this.updateForComponentId}
+                                                address={this.state.profileData.address}
+                                                // updateProfileData={this.updateWithoutSave}
+                                                // saveProfileData={this.updateAndSaveData}
+                                                componentId='address'
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -196,11 +198,13 @@ export default class AccountProfile extends React.Component {
                                             tooltip='Select your nationality'
                                         >
                                             <Nationality
-                                                nationalityData={this.state.profileData.nationality}
-                                                saveProfileData={this.updateAndSaveData}
+                                                 controlFunc={this.updateForComponentId}
+                                                 nationality={this.state.profileData.nationality}
+                                                 //saveProfileData={this.updateAndSaveData}
+                                                 componentId='nationality'
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/*<FormItemWrapper
                                             title='Languages'
                                             tooltip='Select languages that you speak'
                                         >
