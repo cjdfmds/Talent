@@ -18,6 +18,22 @@ namespace Talent.Services.Profile.Domain.Contracts
         Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(string employerOrJobId, bool forJob, int position, int increment);
         Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(IEnumerable<string> ids);
 
+        Task<IEnumerable<AddLanguageViewModel>> GetLanguages();
+        Task<bool> updateLanguage(AddLanguageViewModel language);
+        Task<bool> deleteLanguage(AddLanguageViewModel language);
+
+        Task<IEnumerable<AddSkillViewModel>> GetSkills();
+        Task<bool> AddSkill(AddSkillViewModel skill);
+        Task<bool> UpdateSkill(AddSkillViewModel skill);
+        Task<bool> DeleteSkill(AddSkillViewModel skill);
+
+        Task<IEnumerable<ExperienceViewModel>> GetExperiences();
+        Task<bool> AddExperience(ExperienceViewModel experience);
+        Task<bool> UpdateExperience(ExperienceViewModel experience);
+        Task<bool> DeleteExperience(ExperienceViewModel experience);
+
+
+
         Task<bool> UpdateTalentProfile(TalentProfileViewModel profile, String updaterId);
         Task<bool> UpdateTalentPhoto(string talentId, IFormFile file);
 

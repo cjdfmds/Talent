@@ -9,7 +9,6 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
 namespace Talent.Services.Profile
 {
     public class Program

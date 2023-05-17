@@ -204,13 +204,15 @@ export default class AccountProfile extends React.Component {
                                                  componentId='nationality'
                                             />
                                         </FormItemWrapper>
-                                        {/*<FormItemWrapper
+                                        <FormItemWrapper
                                             title='Languages'
                                             tooltip='Select languages that you speak'
                                         >
                                             <Language
+                                                controlFunc={this.updateForComponentId}
                                                 languageData={this.state.profileData.languages}
-                                                updateProfileData={this.updateAndSaveData}
+                                                //updateProfileData={this.updateAndSaveData}
+                                                componentId='languages'
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -218,8 +220,10 @@ export default class AccountProfile extends React.Component {
                                             tooltip='List your skills'
                                         >
                                             <Skill
+                                                controlFunc={this.updateForComponentId}
                                                 skillData={this.state.profileData.skills}
-                                                updateProfileData={this.updateAndSaveData}
+                                                //updateProfileData={this.updateAndSaveData}
+                                                componentId='skills'
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -227,11 +231,13 @@ export default class AccountProfile extends React.Component {
                                             tooltip='Add your work experience'
                                         >
                                             <Experience
+                                                controlFunc={this.updateForComponentId}
                                                 experienceData={this.state.profileData.experience}
-                                                updateProfileData={this.updateAndSaveData}
+                                                componentId='experience'                                                
+                                                //updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/*<FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
                                         >

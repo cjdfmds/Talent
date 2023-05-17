@@ -1,73 +1,71 @@
-﻿import React from 'react'
-import Cookies from 'js-cookie'
+﻿// Import necessary libraries and JSON data
+import React from 'react'
 import { default as Countries } from '../../../../util/jsonFiles/countries.json';
 import { ChildSingleInput } from '../Form/SingleInput.jsx';
-import { Dropdown, Input, Button, Form } from 'semantic-ui-react';
 
+
+// Initial state for a new location
+const INITIAL_ADDRESS_STATE = { country: '', city: '', addressNumber: '', street: '', suburb: '', postcode: '', };
+
+// This component is responsible for handling the address section of a form
 export class Address extends React.Component {
     constructor(props) {
         super(props)
-        const address =
-        {
-            country: '',
-            city: '',
-            addressNumber: '',
-            street: '',
-            suburb: '',
-            postcode: '',
-        }
 
+        // Initialize the state with an address object and a boolean to manage the display of the edit section
         this.state = {
             showEditSection: false,
-            newAddress: address
+            newAddress: INITIAL_ADDRESS_STATE
         }
 
+        // Bind 'this' context to the methods
         this.renderEdit = this.renderEdit.bind(this)
         this.renderDisplay = this.renderDisplay.bind(this)
         this.openEdit = this.openEdit.bind(this);
         this.closeEdit = this.closeEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.saveAddress = this.saveAddress.bind(this);
-
     }
+
+    // When opening the edit section, copy the current address to the newAddress state
     openEdit() {
-        const address = Object.assign({}, this.props.address);
         this.setState({
             showEditSection: true,
-            newAddress: address
+            newAddress: Object.assign({}, this.props.address)
         })
     }
 
+    // When closing the edit section, simply update the boolean controlling the display
     closeEdit() {
         this.setState({
             showEditSection: false
         })
     }
 
+    // Update the state as user types into input fields
     handleChange(event) {
         const data = Object.assign({}, this.state.newAddress);
         data[event.target.name] = event.target.value;
         this.setState({
             newAddress: data
         });
-
     }
 
+    // Save the new address when the user hits save button
     saveAddress() {
         const data = Object.assign({}, this.state.newAddress);
         this.props.controlFunc(this.props.componentId, data);
         this.closeEdit();
     }
 
-
-    //this.state.showEditSection = true shows rederedit()
-    //this.state.showEditSection = false shows rederdisplay()
-
+    // Depending on the state of showEditSection, it renders the edit form or the display view
     render() {
         return (
             this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
         );
     }
+
+    // Render the edit form with fields for address details
     renderEdit() {
         let countriesOptions = [];
         let citiesOptions = [];
@@ -205,20 +203,24 @@ export class Address extends React.Component {
     }
 }
 
-
+// This component is responsible for handling the nationality section of a form
 export class Nationality extends React.Component {
     constructor(props) {
         super(props)
 
+        // Initialize the state with a string for newNationality and a boolean to manage the display of the save button
         this.state = {
             showEditSection: false,
             newNationality: "",
             showSaveButton: false
         }
+
+        // Bind 'this' context to the methods
         this.handleChange = this.handleChange.bind(this);
         this.saveNationality = this.saveNationality.bind(this);
     }
 
+    // If props.nationality changes, update the state
     componentDidUpdate(prevProps) {
         if (this.props.nationality !== prevProps.nationality) {
             this.setState({
@@ -227,14 +229,15 @@ export class Nationality extends React.Component {
         }
     }
 
+    // Update the state as user selects a nationality and show the save button
     handleChange(event) {
-
         this.setState({
             newNationality: event.target.value,
             showSaveButton: true
         });
-
     }
+
+    // Save the new nationality when the user hits save button
     saveNationality() {
         const data = this.state.newNationality;
         this.props.controlFunc(this.props.componentId, data);
@@ -242,7 +245,7 @@ export class Nationality extends React.Component {
             showSaveButton: false
         })
     }
-
+    // Render the select field for nationality and a save button when a change is detected
     render() {
         const { showSaveButton, newNationality } = this.state;
         const countriesOptions = Object.keys(Countries).map((x) => (

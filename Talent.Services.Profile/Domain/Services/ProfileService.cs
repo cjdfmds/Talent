@@ -14,6 +14,9 @@ using System.IO;
 using Talent.Common.Security;
 using System.Data;
 using StackExchange.Redis;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Talent.Services.Profile.Domain.Services
 {
@@ -25,6 +28,11 @@ namespace Talent.Services.Profile.Domain.Services
         IRepository<Employer> _employerRepository;       
         IRepository<Job> _jobRepository;
         IRepository<Recruiter> _recruiterRepository;
+
+        IRepository<UserSkill> _userSkillRepository;
+        IRepository<UserExperience> _userExperienceRepository;
+
+
         IFileService _fileService;
 
 
@@ -34,7 +42,10 @@ namespace Talent.Services.Profile.Domain.Services
                               IRepository<Employer> employerRepository,
                               IRepository<Job> jobRepository,
                               IRepository<Recruiter> recruiterRepository,
-                              IFileService fileService)
+                              IFileService fileService,
+                              IRepository<UserSkill> userSkillRepository,
+                              IRepository<UserExperience> userExperienceRepository           
+)
         {
             _userAppContext = userAppContext;
             _userLanguageRepository = userLanguageRepository;
@@ -43,13 +54,10 @@ namespace Talent.Services.Profile.Domain.Services
             _jobRepository = jobRepository;
             _recruiterRepository = recruiterRepository;
             _fileService = fileService;
+            _userSkillRepository = userSkillRepository;
+            _userExperienceRepository = userExperienceRepository;
         }
 
-        public bool AddNewLanguage(AddLanguageViewModel language)
-        {
-            //Your code here;
-            throw new NotImplementedException();
-        }
 
         public async Task<TalentProfileViewModel> GetTalentProfile(string Id)
         {
@@ -341,6 +349,306 @@ namespace Talent.Services.Profile.Domain.Services
             throw new NotImplementedException();
         }
 
+        #region Language
+        public async Task<IEnumerable<AddLanguageViewModel>> GetLanguages()
+        {
+            var userId = _userAppContext.CurrentUserId;
+            var languages = (await _userLanguageRepository.Get(language => language.UserId == userId && language.IsDeleted == false));
+            List<AddLanguageViewModel> lists = new List<AddLanguageViewModel>();
+            foreach (var language in languages)
+            {
+                var languageView = new AddLanguageViewModel
+                {
+                    Id = language.Id,
+                    CurrentUserId = userId,
+                    Name = language.Language,
+                    Level = language.LanguageLevel
+
+                };
+                lists.Add(languageView);
+            }
+
+            return lists;
+
+        }
+
+
+        public bool AddNewLanguage(AddLanguageViewModel language)
+        {
+
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                UserLanguage userLanguage = new UserLanguage
+                {
+                    Language = language.Name,
+                    LanguageLevel = language.Level,
+                    UserId = userId
+                };
+                _userLanguageRepository.Add(userLanguage);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+
+        }
+
+        public async Task<bool> updateLanguage(AddLanguageViewModel language)
+        {
+            try
+            {
+
+                var userId = _userAppContext.CurrentUserId;
+
+                if (userId == language.CurrentUserId)
+                {
+                    UserLanguage userLanguage = await _userLanguageRepository.GetByIdAsync(language.Id);
+
+                    userLanguage.Language = language.Name;
+                    userLanguage.LanguageLevel = language.Level;
+                    await _userLanguageRepository.Update(userLanguage);
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
+        public async Task<bool> deleteLanguage(AddLanguageViewModel language)
+        {
+            try
+            {
+
+                var userId = _userAppContext.CurrentUserId;
+
+                if (userId == language.CurrentUserId)
+                {
+                    UserLanguage userLanguage = await _userLanguageRepository.GetByIdAsync(language.Id);
+                    userLanguage.IsDeleted = true;
+                    await _userLanguageRepository.Update(userLanguage);
+                    return true;
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Skills
+        public async Task<IEnumerable<AddSkillViewModel>> GetSkills()
+        {
+            var userId = _userAppContext.CurrentUserId;
+            var skills = (await _userSkillRepository.Get(s => s.UserId == userId && s.IsDeleted == false));
+
+            List<AddSkillViewModel> lists = new List<AddSkillViewModel>();
+
+            foreach (var skill in skills)
+            {
+                AddSkillViewModel skillViewModel = new AddSkillViewModel
+                {
+                    Id = skill.Id,
+                    Name = skill.Skill,
+                    Level = skill.ExperienceLevel
+                };
+                lists.Add(skillViewModel);
+            }
+
+            return lists;
+
+        }
+
+        public async Task<bool> AddSkill(AddSkillViewModel skill)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(skill.Name) || String.IsNullOrWhiteSpace(skill.Level))
+                {
+                    return false;
+                }
+                else
+                {
+                    var userId = _userAppContext.CurrentUserId;
+                    UserSkill userSkill = new UserSkill
+                    {
+                        Skill = skill.Name,
+                        ExperienceLevel = skill.Level,
+                        UserId = userId
+                    };
+
+                    await _userSkillRepository.Add(userSkill);
+                    return true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateSkill(AddSkillViewModel skill)
+        {
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                var skillEntity = await _userSkillRepository.GetByIdAsync(skill.Id);
+
+                if (skillEntity.UserId == userId)
+                {
+                    skillEntity.Skill = skill.Name;
+                    skillEntity.ExperienceLevel = skill.Level;
+
+                    await _userSkillRepository.Update(skillEntity);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteSkill(AddSkillViewModel skill)
+        {
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                var skillEntity = await _userSkillRepository.GetByIdAsync(skill.Id);
+                if (skillEntity.UserId == userId)
+                {
+                    skillEntity.IsDeleted = true;
+                    await _userSkillRepository.Update(skillEntity);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Experience
+
+        public async Task<IEnumerable<ExperienceViewModel>> GetExperiences()
+        {
+            var userId = _userAppContext.CurrentUserId;
+            var experiences = (await _userExperienceRepository.Get(e => e.UserId == userId && e.IsDeleted == false));
+
+            List<ExperienceViewModel> lists = new List<ExperienceViewModel>();
+
+            foreach (var e in experiences)
+            {
+                ExperienceViewModel experience = new ExperienceViewModel
+                {
+                    Id = e.Id,
+                    Company = e.Company,
+                    Position = e.Position,
+                    Responsibilities = e.Responsibilities,
+                    Start = e.Start,
+                    End = e.End
+                };
+                lists.Add(experience);
+            }
+            return lists;
+        }
+
+        public async Task<bool> AddExperience(ExperienceViewModel experience)
+        {
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                UserExperience userExperience = new UserExperience
+                {
+                    Company = experience.Company,
+                    Position = experience.Position,
+                    Responsibilities = experience.Responsibilities,
+                    Start = experience.Start,
+                    End = experience.End,
+                    UserId = userId
+                };
+                await _userExperienceRepository.Add(userExperience);
+                return true;
+
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateExperience(ExperienceViewModel experience)
+        {
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                var userExperience = await _userExperienceRepository.GetByIdAsync(experience.Id);
+
+                if (userExperience.UserId == userId)
+                {
+                    userExperience.Company = experience.Company;
+                    userExperience.Position = experience.Position;
+                    userExperience.Responsibilities = experience.Responsibilities;
+                    userExperience.Start = experience.Start;
+                    userExperience.End = experience.End;
+
+                    await _userExperienceRepository.Update(userExperience);
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteExperience(ExperienceViewModel experience)
+        {
+            try
+            {
+                var userId = _userAppContext.CurrentUserId;
+                var userExperience = await _userExperienceRepository.GetByIdAsync(experience.Id);
+                if (userExperience.UserId == userId)
+                {
+                    userExperience.IsDeleted = true;
+                    await _userExperienceRepository.Update(userExperience);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+#endregion
+
+
+
+
+
+
+
         #region TalentMatching
 
         public async Task<IEnumerable<TalentSuggestionViewModel>> GetFullTalentList()
@@ -433,7 +741,7 @@ namespace Talent.Services.Profile.Domain.Services
         public async Task<Employer> GetEmployer(string employerId)
         {
             return await _employerRepository.GetByIdAsync(employerId);
-        }
+        }        
         #endregion
 
     }
