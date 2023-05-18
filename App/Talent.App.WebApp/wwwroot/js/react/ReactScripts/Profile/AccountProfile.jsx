@@ -237,6 +237,18 @@ export default class AccountProfile extends React.Component {
                                                 //updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
+                                        <FormItemWrapper
+                                            title='Visa Status'
+                                            tooltip='What is your current Visa/Citizenship status?'
+                                        >
+                                            <VisaStatus
+                                                controlFunc={this.updateForComponentId}
+                                                visaStatus={this.state.profileData.visaStatus}
+                                                visaExpiryDate={this.state.profileData.visaExpiryDate}
+                                                //updateProfileData={this.updateWithoutSave}
+                                                //saveProfileData={this.updateAndSaveData}                                                
+                                            />
+                                        </FormItemWrapper>
                                         {/*<FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
@@ -255,17 +267,7 @@ export default class AccountProfile extends React.Component {
                                                 updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
-                                            title='Visa Status'
-                                            tooltip='What is your current Visa/Citizenship status?'
-                                        >
-                                            <VisaStatus
-                                                visaStatus={this.state.profileData.visaStatus}
-                                                visaExpiryDate={this.state.profileData.visaExpiryDate}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
-                                            />
-                                        </FormItemWrapper>
+                                       
                                         <FormItemWrapper
                                             title='Status'
                                             tooltip='What is your current status in jobseeking?'

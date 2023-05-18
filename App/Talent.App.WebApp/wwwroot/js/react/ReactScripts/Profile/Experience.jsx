@@ -282,7 +282,7 @@ export default class Experience extends React.Component {
                         errorMessage="Please enter a valid" />
                 </div>
                 <div className='ui sixteen wide column'>
-                    <button type="button" className="ui teal button" onClick={this.handleAddUpdate}>Save</button>
+                    <button type="button" className="ui teal button" onClick={this.handleAddUpdate}>Add</button>
                     <button type="button" className="ui button" onClick={this.closeAddSection}>Cancel</button>
                 </div>
             </div>

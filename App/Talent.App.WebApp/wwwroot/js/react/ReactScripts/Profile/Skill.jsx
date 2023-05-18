@@ -223,7 +223,7 @@ export default class Skill extends React.Component {
                     </select>
                 </div>
                 <div className='ui four wide column'>
-                    <button type="button" className="ui teal button" onClick={this.handleAddUpdate}>Save</button>
+                    <button type="button" className="ui teal button" onClick={this.handleAddUpdate}>Add</button>
                     <button type="button" className="ui button" onClick={this.closeAddSection}>Cancel</button>
                 </div>
             </div>

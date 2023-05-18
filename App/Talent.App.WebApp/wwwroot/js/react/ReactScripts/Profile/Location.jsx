@@ -232,8 +232,7 @@ export class Nationality extends React.Component {
     // Update the state as user selects a nationality and show the save button
     handleChange(event) {
         this.setState({
-            newNationality: event.target.value,
-            showSaveButton: true
+            newNationality: event.target.value,            
         });
     }
 
