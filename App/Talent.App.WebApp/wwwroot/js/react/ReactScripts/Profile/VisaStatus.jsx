@@ -54,24 +54,28 @@ export default class VisaStatus extends React.Component {
     }
 
     handleChange(event) {
+        const { name, value } = event.target;
+      
         // Copy newVisa from state and update the changed field
         const newVisa = Object.assign({}, this.state.newVisa);
-        newVisa[event.target.name] = event.target.value;
-
-        // Determine if the current visa is a student visa
-        const isStudentWorkVisa = newVisa.visaStatus === 'Student Visa' || newVisa.visaStatus === 'Work Visa' || newVisa.visaExpiryDate;
-
+        newVisa[name] = value;
+      
+        // Determine if the current visa is a student or work visa
+        const isStudentWorkVisa =
+          newVisa.visaStatus === "Work Visa" || newVisa.visaStatus === "Student Visa";
+      
         if (!isStudentWorkVisa) {
-            // If not a student visa, set expiry date to null
-            newVisa.visaExpiryDate = null || '';
+          // If not a student or work visa, set expiry date to empty string
+          newVisa.visaExpiryDate = "";
         }
-
+      
         // Update state
         this.setState({
-            newVisa,
-            isStudentWorkVisa
+          newVisa: newVisa,
+          isStudentWorkVisa: isStudentWorkVisa,
         });
-    }
+      }
+      
 
     saveVisaStatus() {
         // Send the new visa data back to the parent component
@@ -114,8 +118,7 @@ export default class VisaStatus extends React.Component {
                 )}
     
                 <div className='sixteen wide column '>
-                    <button type="button" className="ui teal button" onClick={this.saveVisaStatus} >Save</button>
-                    <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
+                    <button type="button" className="ui teal button" onClick={this.saveVisaStatus} >Save</button>                 
                 </div>
             </div>
         );

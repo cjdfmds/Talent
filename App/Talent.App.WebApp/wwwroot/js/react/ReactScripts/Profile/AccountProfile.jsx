@@ -249,6 +249,19 @@ export default class AccountProfile extends React.Component {
                                                 //saveProfileData={this.updateAndSaveData}                                                
                                             />
                                         </FormItemWrapper>
+
+                                        <FormItemWrapper
+                                            title='Status'
+                                            tooltip='What is your current status in jobseeking?'
+                                        >
+                                            <TalentStatus
+                                                controlFunc={this.updateForComponentId}
+                                                jobSeekingStatus={this.state.profileData.jobSeekingStatus}
+                                                componentId='jobSeekingStatus'
+                                                // updateProfileData={this.updateWithoutSave}
+                                                // saveProfileData={this.updateAndSaveData}
+                                            />
+                                        </FormItemWrapper>
                                         {/*<FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
@@ -268,16 +281,7 @@ export default class AccountProfile extends React.Component {
                                             />
                                         </FormItemWrapper>
                                        
-                                        <FormItemWrapper
-                                            title='Status'
-                                            tooltip='What is your current status in jobseeking?'
-                                        >
-                                            <TalentStatus
-                                                status={this.state.profileData.jobSeekingStatus}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
-                                            />
-                                        </FormItemWrapper>
+                                        
                                         <FormItemWrapper
                                             title='Profile Photo'
                                             tooltip='Please upload your profile photo'
