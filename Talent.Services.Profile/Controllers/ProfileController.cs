@@ -332,20 +332,51 @@ namespace Talent.Services.Profile.Controllers
 
         [HttpGet("getProfileImage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult getProfileImage(string Id)
+        public async Task<ActionResult> GetProfileImage(string Id)
         {
-            var profileUrl = _documentService.GetFileURL(Id, FileType.ProfilePhoto);
-            //Please do logic for no image available - maybe placeholder would be fine
-            return Json(new { profilePath = profileUrl });
+            var userId = _userAppContext.CurrentUserId;
+            User profile = await _userRepository.GetByIdAsync(userId);
+
+            var uri = $"{Request.Scheme}://{Request.Host}";
+
+            if (string.IsNullOrEmpty(profile.ProfilePhoto))
+            {
+                // Placeholder image URL when profile photo is not available
+                var placeholderUrl = "https://via.placeholder.com/150";
+                return Json(new { Success = true, data = placeholderUrl });
+            }
+
+            var tempUrl = await _documentService.GetFileURL(profile.ProfilePhoto, FileType.ProfilePhoto);
+            var profileUrl = new Uri(new Uri(uri), tempUrl).AbsoluteUri;
+
+            return Json(new { Success = true, data = profileUrl });
         }
 
         [HttpPost("updateProfilePhoto")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<ActionResult> UpdateProfilePhoto()
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+
+                if (Request.Form.Files.Count == 1)
+                {
+                    IFormFile photo = Request.Form.Files[0];
+                    var userId = _userAppContext.CurrentUserId;
+                    if (await _profileService.UpdateTalentPhoto(userId, photo))
+                    {
+                        return Json(new { Success = true });
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+            }
+            return Json(new { Success = false });
         }
+
 
         [HttpPost("updateTalentCV")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]

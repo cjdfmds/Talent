@@ -1,17 +1,17 @@
 ﻿import React from 'react';
 import { Checkbox } from 'semantic-ui-react';
 
+// Initial state for a new Visa
+const INITIAL_JOBSEEKINGSTATUS_STATE = {status: '' , availableDate: ''};
+
 export default class TalentStatus extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       showEditSection: false,
-      newJobStatus: {
-        status: '',
-        availableDate: ''
-      }
-    };
+      newJobStatus:INITIAL_JOBSEEKINGSTATUS_STATE
+     };
 
     this.openEdit = this.openEdit.bind(this);
     this.closeEdit = this.closeEdit.bind(this);

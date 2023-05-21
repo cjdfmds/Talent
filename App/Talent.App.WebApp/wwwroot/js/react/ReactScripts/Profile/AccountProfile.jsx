@@ -262,6 +262,18 @@ export default class AccountProfile extends React.Component {
                                                 // saveProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
+
+                                        <FormItemWrapper
+                                            title='Profile Photo'
+                                            tooltip='Please upload your profile photo'
+                                            hideSegment={true}
+                                        >
+                                            <PhotoUpload
+                                                profilePhoto={this.state.profileData.profilePhoto}                                               
+                                                //updateProfileData={this.updateWithoutSave}
+                                                //savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
+                                            />
+                                        </FormItemWrapper>
                                         {/*<FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
@@ -282,17 +294,7 @@ export default class AccountProfile extends React.Component {
                                         </FormItemWrapper>
                                        
                                         
-                                        <FormItemWrapper
-                                            title='Profile Photo'
-                                            tooltip='Please upload your profile photo'
-                                            hideSegment={true}
-                                        >
-                                            <PhotoUpload
-                                                imageId={this.state.profileData.profilePhotoUrl}
-                                                updateProfileData={this.updateWithoutSave}
-                                                savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
-                                            />
-                                        </FormItemWrapper>
+                                        
                                         <FormItemWrapper
                                             title='Profile Video'
                                             tooltip='Upload a brief self-introduction video'
