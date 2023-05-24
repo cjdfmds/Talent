@@ -566,28 +566,64 @@ namespace Talent.Services.Profile.Controllers
 
         [HttpGet("getTalent")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "recruiter, employer")]
-        public async Task<IActionResult> GetTalentSnapshots(FeedIncrementModel feed)
+        public IActionResult GetTalentSnapshots(FeedIncrementModel feed)
         {
             try
             {
-                var result = (await _profileService.GetTalentSnapshotList(_userAppContext.CurrentUserId, false, feed.Position, feed.Number)).ToList();
+                var result = new List<Models.TalentSnapshotViewModel>
+        {
+            new Models.TalentSnapshotViewModel
+            {
+                CurrentEmployment = "Software Developer at XYZ",
+                Level = "Junior",
+                Name = "Dummy User...",
+                PhotoId = "",
+                Skills = new List<string> { "C#", ".Net Core", "Javascript", "ReactJS", "PreactJS" },
+                Summary = "Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.",
+                Visa = "Student"
+            },
+            new Models.TalentSnapshotViewModel
+            {
+                CurrentEmployment = "Software Developer at XYZ",
+                Level = "Junior",
+                Name = "Dummy User 1",
+                PhotoId = "",
+                Skills = new List<string> { "C#", ".Net Core", "Javascript", "ReactJS", "PreactJS" },
+                Summary = "Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.",
+                Visa = "Work"
+            },
+            new Models.TalentSnapshotViewModel
+            {
+                CurrentEmployment = "UI/UX Designer at ABC",
+                Level = "Senior",
+                Name = "Dummy User 2",
+                PhotoId = "",
+                Skills = new List<string> { "UI/UX Design", "Adobe XD", "Sketch", "InVision" },
+                Summary = "John Doe is a talented UI/UX designer with a passion for creating beautiful and user-friendly interfaces.",
+                Visa = "Work Permit"
+            },
+            new Models.TalentSnapshotViewModel
+            {
+                CurrentEmployment = "Data Scientist at XYZ Corp",
+                Level = "Mid",
+                Name = "Dummy User 3",
+                PhotoId = "",
+                Skills = new List<string> { "Python", "Machine Learning", "Data Analysis", "Statistics" },
+                Summary = "Jane Smith is an experienced data scientist specializing in machine learning algorithms and data analysis.",
+                Visa = "Work Permit"
+            },
+            new Models.TalentSnapshotViewModel
+            {
+                CurrentEmployment = "Marketing Manager at ABC Corp",
+                Level = "Senior",
+                Name = "Dummy User 4",
+                PhotoId = "",
+                Skills = new List<string> { "Marketing Strategy", "Digital Marketing", "SEO", "Social Media Marketing" },
+                Summary = "Mark Johnson is a results-driven marketing manager with a proven track record of driving successful marketing campaigns.",
+                Visa = "Citizen"
+            }
+        };
 
-                // Dummy talent to fill out the list once we run out of data
-                //if (result.Count == 0)
-                //{
-                //    result.Add(
-                //            new Models.TalentSnapshotViewModel
-                //            {
-                //                CurrentEmployment = "Software Developer at XYZ",
-                //                Level = "Junior",
-                //                Name = "Dummy User...",
-                //                PhotoId = "",
-                //                Skills = new List<string> { "C#", ".Net Core", "Javascript", "ReactJS", "PreactJS" },
-                //                Summary = "Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.",
-                //                Visa = "Citizen"
-                //            }
-                //        );
-                //}
                 return Json(new { Success = true, Data = result });
             }
             catch (Exception e)
@@ -595,6 +631,7 @@ namespace Talent.Services.Profile.Controllers
                 return Json(new { Success = false, e.Message });
             }
         }
+
         #endregion
 
         #region TalentMatching

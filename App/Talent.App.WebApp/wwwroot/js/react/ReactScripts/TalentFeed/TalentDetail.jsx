@@ -11,14 +11,13 @@ export default class TalentDetail extends React.Component {
     constructor(props) {
         super(props)
     }
-
-    //componentDidMount() {
-    //    this.loadData()
-    //}
-
-    //loadData()  url: 'http://localhost:60290/profile/profile/getTalentProfile',
    
     render() {
-        
+        return (
+            <div>
+                <h1>Talent Feed</h1>
+                <p>Some content goes here...</p>
+            </div>
+        );
     }
 }

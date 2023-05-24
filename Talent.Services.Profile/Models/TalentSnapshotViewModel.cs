@@ -17,5 +17,9 @@ namespace Talent.Services.Profile.Models
         public string Visa { get; set; }
         public string Level { get; set; }
         public List<string> Skills { get; set; }
+
+        public string Linkedin { get; set; }
+        public string Github { get; set; }
+
     }
 }
