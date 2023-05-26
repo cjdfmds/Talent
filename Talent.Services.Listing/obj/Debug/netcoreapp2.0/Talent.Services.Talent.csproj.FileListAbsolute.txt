@@ -23,3 +23,5 @@ C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\
 C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\obj\Debug\netcoreapp2.0\Talent.Services.Talent.dll
 C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\obj\Debug\netcoreapp2.0\Talent.Services.Talent.pdb
 C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\obj\Debug\netcoreapp2.0\Talent.Services.Talent.genruntimeconfig.cache
+C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\bin\Debug\netcoreapp2.0\appsettings.Listing..json
+C:\Users\mdscj\OneDrive\Documents\GitHub\Talent3\Talent\Talent.Services.Listing\bin\Debug\netcoreapp2.0\appsettings.Listing.Development.json
